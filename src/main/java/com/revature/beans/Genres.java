@@ -2,21 +2,12 @@ package com.revature.beans;
 
 public class Genres {
 
-	public Integer id;
 	public String name;
 	
 	public Genres() {}
 	
 	public Genres(String name) {
 		this.name = name;
-	}
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
