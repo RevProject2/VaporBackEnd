@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Users addUser(Users u) {
-		return udao.save(u);
+		Users user = udao.findByUsername(u.getUsername());
+		if (user != null) {
+			return udao.save(u);
+		}
+		return null;
 	}
 
 	@Override

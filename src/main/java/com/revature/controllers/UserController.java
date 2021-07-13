@@ -46,7 +46,10 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<Users> addUser(@RequestBody Users u) {
 		Users user = us.addUser(u);
-		return ResponseEntity.created(URI.create("http://localhost:8080/CatAppSpringWeb/cats/" + user.getId())).build();
+		if (user != null) {
+			return ResponseEntity.created(URI.create("http://localhost:8080/CatAppSpringWeb/cats/" + user.getId())).build();
+		}
+		return ResponseEntity.status(409).build();
 	}
 	
 	@PutMapping
@@ -66,7 +69,7 @@ public class UserController {
 	
 	@PostMapping(path="/login")
 	public ResponseEntity<Users> login(@RequestBody Users u, HttpServletRequest request) {
-		System.out.println(request.getSession().getId());
+		//System.out.println(request.getSession().getId());
 		Users user = us.login(u.getUsername(), u.getPassword());
 		if (user != null) {
 			request.getSession().setAttribute("user", user);
@@ -77,13 +80,13 @@ public class UserController {
 	
 	@PostMapping(path="/logout")
 	public void logout(HttpServletRequest request) {
-		System.out.println(request.getSession().getId());
+		//System.out.println(request.getSession().getId());
 		request.getSession().invalidate();
 	}
 	
 	@GetMapping(path="/account")
 	public ResponseEntity<Users> getInfo(HttpServletRequest request) {
-		System.out.println(request.getSession().getId());
+		//System.out.println(request.getSession().getId());
 		Users user = (Users)request.getSession().getAttribute("user");
 		if (user != null) {
 			return ResponseEntity.ok(user);
