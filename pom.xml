@@ -12,6 +12,7 @@
 	<groupId>com.revature</groupId>
 	<artifactId>Projec2-Back-End</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Projec2-Back-End</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
