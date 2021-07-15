@@ -23,7 +23,7 @@ import com.revature.services.UserService;
 
 @RestController
 @RequestMapping(path="/users")
-@CrossOrigin(allowCredentials = "true", origins = "http://revproject2frontend.s3-website-us-west-2.amazonaws.com/")
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:4200","http://revproject2frontend.s3-website-us-west-2.amazonaws.com/"})
 public class UserController {
 	// comment
 	private UserService us;
