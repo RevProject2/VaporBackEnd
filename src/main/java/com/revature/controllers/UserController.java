@@ -75,6 +75,7 @@ public class UserController {
 		Users user = us.login(u.getUsername(), u.getPassword());
 		if (user != null) {
 			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("id", user.getId());
 			return ResponseEntity.ok(user);
 		}
 		return ResponseEntity.notFound().build();
@@ -90,6 +91,9 @@ public class UserController {
 	public ResponseEntity<Users> getInfo(HttpServletRequest request) {
 		//System.out.println(request.getSession().getId());
 		Users user = (Users)request.getSession().getAttribute("user");
+		Integer id = (Integer)request.getSession().getAttribute("id");
+		System.out.println(user);
+		System.out.println(id);
 		if (user != null) {
 			return ResponseEntity.ok(user);
 		}
