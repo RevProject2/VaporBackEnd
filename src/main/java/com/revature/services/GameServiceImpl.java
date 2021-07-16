@@ -48,4 +48,9 @@ public class GameServiceImpl implements GameService {
 
 	}
 
+	@Override
+	public List<Games> search(String name) {
+		return gdao.search(name);
+	}
+
 }

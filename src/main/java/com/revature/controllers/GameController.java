@@ -39,6 +39,11 @@ public class GameController {
 		return gs.getAll();
 	}
 	
+	@PostMapping(path="/search")
+	public List<Games> search(@RequestBody Games g) {
+		return gs.search(g.getName());
+	}
+	
 	@PostMapping
 	public ResponseEntity<Games> addGame(@RequestBody Games g) {
 		Games game = gs.add(g);
