@@ -23,7 +23,16 @@ public class Games {
 	@ManyToOne(targetEntity = Genres.class)
 	@JoinColumn(name="genre", referencedColumnName = "name")
 	private Genres genre;
+	private String img;
 	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public Games() {}
 
 	public Integer getId() {
@@ -64,6 +73,7 @@ public class Games {
 		int result = 1;
 		result = prime * result + ((genre == null) ? 0 : genre.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((img == null) ? 0 : img.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		return result;
@@ -88,6 +98,11 @@ public class Games {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (img == null) {
+			if (other.img != null)
+				return false;
+		} else if (!img.equals(other.img))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -103,7 +118,9 @@ public class Games {
 
 	@Override
 	public String toString() {
-		return "Games [id=" + id + ", name=" + name + ", price=" + price + ", genre=" + genre + "]";
+		return "Games [id=" + id + ", name=" + name + ", price=" + price + ", genre=" + genre + ", img=" + img + "]";
 	}
+
+	
 
 }
