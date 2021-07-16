@@ -1,7 +1,14 @@
 package com.revature.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity(name="genres")
+@Table(name="genres")
 public class Genres {
 
+	@Id
 	public String name;
 	
 	public Genres() {}
