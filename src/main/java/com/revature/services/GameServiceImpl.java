@@ -26,7 +26,7 @@ public class GameServiceImpl implements GameService {
 	@Override
 	public Games add(Games t) {
 		Games game = gdao.findByName(t.getName());
-		if (game != null) {
+		if (game == null) {
 			return gdao.save(t);
 		}
 		return null;
@@ -44,7 +44,7 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public void deleteById(int id) {
-		// TODO Auto-generated method stub
+		gdao.deleteById(id);
 
 	}
 
