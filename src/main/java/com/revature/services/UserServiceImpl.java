@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Users getUserById(int id) {
+	public Users getById(int id) {
 		return udao.findById(id).get();
 	}
 
 	@Override
-	public Users addUser(Users u) {
+	public Users add(Users u) {
 		Users user = udao.findByUsername(u.getUsername());
 		if (user != null) {
 			return udao.save(u);
@@ -33,17 +33,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Users> getAllUsers() {
+	public List<Users> getAll() {
 		return (List<Users>) udao.findAll();
 	}
 
 	@Override
-	public Users updateUser(Users u) {
+	public Users update(Users u) {
 		return udao.save(u);
 	}
 
 	@Override
-	public void deleteUserById(int id) {
+	public void deleteById(int id) {
 		udao.deleteById(id);
 
 	}

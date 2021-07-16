@@ -1,10 +1,27 @@
 package com.revature.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity(name="games")
+@Table(name="games")
 public class Games {
 	
+	@Id
+	@Column(name="id", insertable=false, updatable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	@Column(columnDefinition = "NUMERIC(12,2)")
 	private Double price;
+	@ManyToOne(targetEntity = Genres.class)
+	@JoinColumn(name="genre", referencedColumnName = "name")
 	private Genres genre;
 	
 	public Games() {}

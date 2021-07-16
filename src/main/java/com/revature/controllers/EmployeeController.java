@@ -18,46 +18,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Users;
-import com.revature.services.UserService;
+import com.revature.beans.Employees;
+import com.revature.services.EmployeeService;
 
 @RestController
-@RequestMapping(path="/users")
+@RequestMapping(path="/employees")
 @CrossOrigin(allowCredentials = "true", origins = {"http://localhost:4200","http://revproject2frontend.s3-website-us-west-2.amazonaws.com/"})
-public class UserController {
-	
-	private UserService us;
+public class EmployeeController {
+
+	private EmployeeService es;
 	
 	@Autowired
-	public UserController(UserService us) {
-		this.us = us;
+	public EmployeeController(EmployeeService es) {
+		this.es = es;
 	}
 	
 	@GetMapping
-	public List<Users> getAllUsers(HttpServletRequest request) {
+	public List<Employees> getAllEmployees(HttpServletRequest request) {
 		System.out.println(request.getSession().getId());
-		return us.getAll();
+		return es.getAll();
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<Users> getUserById(@PathVariable("id") Integer id) {
-		Users u = us.getById(id);
-		return ResponseEntity.ok(u);
+	public ResponseEntity<Employees> getUserById(@PathVariable("id") Integer id) {
+		Employees e = es.getById(id);
+		return ResponseEntity.ok(e);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Users> addUser(@RequestBody Users u) {
-		Users user = us.add(u);
-		if (user != null) {
-			return ResponseEntity.created(URI.create("http://localhost:8080/users" + user.getId())).build();
+	public ResponseEntity<Employees> addUser(@RequestBody Employees e) {
+		Employees emp = es.add(e);
+		if (emp != null) {
+			return ResponseEntity.created(URI.create("http://localhost:8080/employees" + emp.getId())).build();
 		}
 		return ResponseEntity.status(409).build();
 	}
 	
 	@PutMapping
-	public ResponseEntity<Users> updateUser(@RequestBody Users u) {
-		Users user = us.update(u);
-		return ResponseEntity.created(URI.create("http://localhost:8080/users" + user.getId())).build();
+	public ResponseEntity<Employees> updateUser(@RequestBody Employees e) {
+		Employees emp = es.update(e);
+		return ResponseEntity.created(URI.create("http://localhost:8080/employees" + emp.getId())).build();
 	}
 	
 	@DeleteMapping(path="/{id}")
@@ -65,18 +65,18 @@ public class UserController {
 		// Currently we won't have deleting account functionality
 		// So this method does not really matter
 		// In the future, should add some error handling based on delete
-		us.deleteById(id);
+		es.deleteById(id);
 		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/login")
-	public ResponseEntity<Users> login(@RequestBody Users u, HttpServletRequest request) {
+	public ResponseEntity<Employees> login(@RequestBody Employees e, HttpServletRequest request) {
 		//System.out.println(request.getSession().getId());
-		Users user = us.login(u.getUsername(), u.getPassword());
-		if (user != null) {
-			request.getSession().setAttribute("user", user);
-			request.getSession().setAttribute("id", user.getId());
-			return ResponseEntity.ok(user);
+		Employees emp = es.login(e.getUsername(), e.getPassword());
+		if (emp != null) {
+			request.getSession().setAttribute("employee", emp);
+			request.getSession().setAttribute("id", emp.getId());
+			return ResponseEntity.ok(emp);
 		}
 		return ResponseEntity.notFound().build();
 	}
@@ -88,14 +88,14 @@ public class UserController {
 	}
 	
 	@GetMapping(path="/account")
-	public ResponseEntity<Users> getInfo(HttpServletRequest request) {
+	public ResponseEntity<Employees> getInfo(HttpServletRequest request) {
 		//System.out.println(request.getSession().getId());
-		Users user = (Users)request.getSession().getAttribute("user");
+		Employees e = (Employees)request.getSession().getAttribute("employee");
 		Integer id = (Integer)request.getSession().getAttribute("id");
-		System.out.println(user);
+		System.out.println(e);
 		System.out.println(id);
-		if (user != null) {
-			return ResponseEntity.ok(user);
+		if (e != null) {
+			return ResponseEntity.ok(e);
 		}
 		return ResponseEntity.status(401).build();
 	}

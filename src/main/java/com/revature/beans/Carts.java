@@ -1,8 +1,24 @@
 package com.revature.beans;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity(name="carts")
+@Table(name="carts")
+@IdClass(CartID.class)
 public class Carts {
 	
+	@Id
+	@OneToOne(targetEntity = Users.class)
+	@JoinColumn(name="userId", referencedColumnName = "id")
 	private Users userId;
+	@Id
+	@OneToOne(targetEntity = Games.class)
+	@JoinColumn(name="gameId", referencedColumnName = "id")
 	private Games gameId;
 	
 	public Carts() {}
