@@ -1,25 +1,27 @@
 package com.revature.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name="libraries")
 @Table(name="libraries")
-@IdClass(CartID.class)
 public class Libraries {
 	
 	@Id
-	@OneToOne(targetEntity = Users.class)
-	@JoinColumn(name="userId", referencedColumnName = "id")
+	@Column(name="id", insertable=false, updatable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	@ManyToOne(targetEntity = Users.class)
+	@JoinColumn(name="user_id", referencedColumnName = "id")
 	private Users userId;
-	@Id
-	@OneToOne(targetEntity = Games.class)
-	@JoinColumn(name="gameId", referencedColumnName = "id")
+	@ManyToOne(targetEntity = Games.class)
+	@JoinColumn(name="game_id", referencedColumnName = "id")
 	private Games gameId;
 	
 	public Libraries() {}
@@ -29,6 +31,15 @@ public class Libraries {
 		this.gameId = gameId;
 	}
 	
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Users getUserId() {
 		return userId;
 	}
@@ -50,6 +61,7 @@ public class Libraries {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
@@ -68,6 +80,11 @@ public class Libraries {
 				return false;
 		} else if (!gameId.equals(other.gameId))
 			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (userId == null) {
 			if (other.userId != null)
 				return false;
@@ -78,7 +95,7 @@ public class Libraries {
 
 	@Override
 	public String toString() {
-		return "Libraries [userId=" + userId + ", gameId=" + gameId + "]";
+		return "Libraries [id=" + id + ", userId=" + userId + ", gameId=" + gameId + "]";
 	}
 
 	

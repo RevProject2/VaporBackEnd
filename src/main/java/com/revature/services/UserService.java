@@ -9,4 +9,5 @@ public interface UserService extends GenericService<Users> {
 //	public Users updateUser(Users u);
 //	public void deleteUserById(int id);
 	public Users login(String username, String password);
+
 }
