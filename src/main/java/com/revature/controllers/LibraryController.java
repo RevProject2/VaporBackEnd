@@ -1,0 +1,36 @@
+package com.revature.controllers;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.revature.beans.Libraries;
+import com.revature.beans.Users;
+import com.revature.services.LibraryServiceImpl;
+
+@RestController
+@RequestMapping(path="/libraries")
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:4200","http://revproject2frontend.s3-website-us-west-2.amazonaws.com/"})
+public class LibraryController {
+
+	private LibraryServiceImpl ls;
+	
+	@Autowired
+	public LibraryController(LibraryServiceImpl ls) {
+		this.ls = ls;
+	}
+	
+	@GetMapping
+	public List<Libraries> getLibraryById(HttpServletRequest request) {
+		Users u = (Users)request.getSession().getAttribute("user");
+		List<Libraries> l = ls.get(u.getId());
+		return l;
+	}
+	
+}
