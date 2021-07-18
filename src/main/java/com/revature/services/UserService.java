@@ -10,4 +10,8 @@ public interface UserService extends GenericService<Users> {
 //	public void deleteUserById(int id);
 	public Users login(String username, String password);
 
+	public boolean purchaseCart(Integer id);
+
+	public void deposit(Users u, Double amount);
+
 }
