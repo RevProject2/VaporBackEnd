@@ -5,17 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.beans.Carts;
 import com.revature.beans.Users;
+import com.revature.repos.CartDAO;
 import com.revature.repos.UserDAO;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	private UserDAO udao;
+	private CartDAO cdao;
 	
 	@Autowired
-	public UserServiceImpl(UserDAO udao) {
+	public UserServiceImpl(UserDAO udao, CartDAO cdao) {
 		this.udao = udao;
+		this.cdao = cdao;
 	}
 	
 	@Override
@@ -55,6 +59,35 @@ public class UserServiceImpl implements UserService {
 			return u;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean purchaseCart(Integer id) {
+		List<Carts> cart = cdao.getCart(id);
+		double cart_price = 0;
+		for (Carts c : cart) {
+			cart_price += c.getGameId().getPrice();
+		}
+		Users u = udao.findById(id).get();
+		if (u != null && u.getBalance() >= cart_price) {
+			for(Carts c : cart) {
+				udao.addToLibrary(id, c.getGameId().getId());
+				cdao.delete(c);
+			}
+			u.setBalance(u.getBalance() - cart_price);
+			udao.save(u);
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public void deposit(Users u, Double amount) {
+		if (amount != null && amount > 0) {
+			u.setBalance(u.getBalance() + amount);
+			udao.save(u);
+		}
 	}
 
 

@@ -102,4 +102,20 @@ public class UserController {
 		return ResponseEntity.status(401).build();
 	}
 	
+	@PostMapping(path="/purchase")
+	public ResponseEntity<Integer> purchaseCart(HttpServletRequest request) {
+		Integer id = (Integer)request.getSession().getAttribute("id");
+		boolean b = us.purchaseCart(id);
+		if (b == true) {
+			return new ResponseEntity<>(id, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(id, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(path="/deposit")
+	public void deposit(@RequestBody Users u, HttpServletRequest request) {
+		Users user = (Users)request.getSession().getAttribute("user");
+		us.deposit(user, u.getBalance());
+	}
 }
