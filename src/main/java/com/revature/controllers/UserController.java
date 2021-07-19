@@ -113,7 +113,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping(path="/deposit")
+	@PutMapping(path="/deposit")
 	public void deposit(@RequestBody Users u, HttpServletRequest request) {
 		Users user = (Users)request.getSession().getAttribute("user");
 		us.deposit(user, u.getBalance());
