@@ -125,7 +125,7 @@ public class UserController {
 		}
 	}
 	
-	@PutMapping(path="/deposit{id}")
+	@PutMapping(path="/deposit/{id}")
 	public ResponseEntity<Users> deposit(@RequestBody Users u, @PathVariable Integer id, HttpServletRequest request) {
 		Users user = us.getById(id);
 		boolean check = us.deposit(user, u.getBalance());
