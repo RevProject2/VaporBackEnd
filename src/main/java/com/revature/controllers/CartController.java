@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +32,13 @@ public class CartController {
 	}
 	
 	@GetMapping
-	public List<Carts> getCartById(HttpServletRequest request) {
+	public ResponseEntity<List<Carts>> getCartById(HttpServletRequest request) {
 		Users u = (Users)request.getSession().getAttribute("user");
-		List<Carts> c = cs.get(u.getId());
-		return c;
+		if (u != null) {
+			List<Carts> c = cs.get(u.getId());
+			return new ResponseEntity<>(c, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping(path="/add")

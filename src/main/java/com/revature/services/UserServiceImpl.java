@@ -1,13 +1,16 @@
 package com.revature.services;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Carts;
+import com.revature.beans.Purchases;
 import com.revature.beans.Users;
 import com.revature.repos.CartDAO;
+import com.revature.repos.PurchaseDAO;
 import com.revature.repos.UserDAO;
 
 @Service
@@ -15,11 +18,13 @@ public class UserServiceImpl implements UserService {
 
 	private UserDAO udao;
 	private CartDAO cdao;
+	private PurchaseDAO pdao;
 	
 	@Autowired
-	public UserServiceImpl(UserDAO udao, CartDAO cdao) {
+	public UserServiceImpl(UserDAO udao, CartDAO cdao, PurchaseDAO pdao) {
 		this.udao = udao;
 		this.cdao = cdao;
+		this.pdao = pdao;
 	}
 	
 	@Override
@@ -72,6 +77,8 @@ public class UserServiceImpl implements UserService {
 		if (u != null && u.getBalance() >= cart_price) {
 			for(Carts c : cart) {
 				udao.addToLibrary(id, c.getGameId().getId());
+				Date d = new Date(System.currentTimeMillis());
+				udao.addToPurchaseHistory(id, c.getGameId().getId(), d);
 				cdao.delete(c);
 			}
 			u.setBalance(u.getBalance() - cart_price);
@@ -88,6 +95,11 @@ public class UserServiceImpl implements UserService {
 			u.setBalance(u.getBalance() + amount);
 			udao.save(u);
 		}
+	}
+
+	@Override
+	public List<Purchases> getHistory(Integer id) {
+		return pdao.get(id);
 	}
 
 
