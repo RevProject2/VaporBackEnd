@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Libraries;
+import com.revature.beans.Purchases;
 import com.revature.beans.Users;
+import com.revature.services.LibraryService;
 import com.revature.services.UserService;
 
 @RestController
@@ -27,10 +30,12 @@ import com.revature.services.UserService;
 public class UserController {
 	
 	private UserService us;
+	private LibraryService ls;
 	
 	@Autowired
-	public UserController(UserService us) {
+	public UserController(UserService us, LibraryService ls) {
 		this.us = us;
+		this.ls = ls;
 	}
 	
 	@GetMapping
@@ -93,11 +98,14 @@ public class UserController {
 	public ResponseEntity<Users> getInfo(HttpServletRequest request) {
 		//System.out.println(request.getSession().getId());
 		Users user = (Users)request.getSession().getAttribute("user");
+		Users update_user = us.getById(user.getId());
+		
 //		Integer id = (Integer)request.getSession().getAttribute("id");
 //		System.out.println(user);
 //		System.out.println(id);
-		if (user != null) {
-			return ResponseEntity.ok(user);
+		if (update_user != null) {
+			request.getSession().setAttribute("user", update_user);
+			return ResponseEntity.ok(update_user);
 		}
 		return ResponseEntity.status(401).build();
 	}
@@ -117,5 +125,22 @@ public class UserController {
 	public void deposit(@RequestBody Users u, HttpServletRequest request) {
 		Users user = (Users)request.getSession().getAttribute("user");
 		us.deposit(user, u.getBalance());
+	}
+	
+	@GetMapping(path="/history")
+	public List<Purchases> getHistory(HttpServletRequest request) {
+		Integer id = (Integer)request.getSession().getAttribute("id");
+		return us.getHistory(id);
+	}
+	
+	@GetMapping(path="libraries/{id}")
+	public ResponseEntity<List<Libraries>> getLibraryById(@PathVariable Integer id, HttpServletRequest request) {
+		Users u = us.getById(id);
+		if (u != null) {
+			List<Libraries> l = ls.get(u.getId());
+			return new ResponseEntity<>(l, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

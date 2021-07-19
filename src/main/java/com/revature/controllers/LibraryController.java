@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +29,16 @@ public class LibraryController {
 	}
 	
 	@GetMapping
-	public List<Libraries> getLibraryById(HttpServletRequest request) {
+	public ResponseEntity<List<Libraries>> getLibrary(HttpServletRequest request) {
 		Users u = (Users)request.getSession().getAttribute("user");
-		List<Libraries> l = ls.get(u.getId());
-		return l;
+		if (u != null) {
+			List<Libraries> l = ls.get(u.getId());
+			return new ResponseEntity<>(l, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
+	
+	
 	
 }

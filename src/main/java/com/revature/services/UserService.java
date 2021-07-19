@@ -1,5 +1,8 @@
 package com.revature.services;
 
+import java.util.List;
+
+import com.revature.beans.Purchases;
 import com.revature.beans.Users;
 
 public interface UserService extends GenericService<Users> {
@@ -13,5 +16,7 @@ public interface UserService extends GenericService<Users> {
 	public boolean purchaseCart(Integer id);
 
 	public void deposit(Users u, Double amount);
+
+	public List<Purchases> getHistory(Integer id);
 
 }
