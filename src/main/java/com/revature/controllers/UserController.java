@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Carts;
 import com.revature.beans.Libraries;
 import com.revature.beans.Purchases;
 import com.revature.beans.Users;
+import com.revature.services.CartService;
 import com.revature.services.LibraryService;
 import com.revature.services.UserService;
 
@@ -31,11 +33,13 @@ public class UserController {
 	
 	private UserService us;
 	private LibraryService ls;
+	private CartService cs;
 	
 	@Autowired
-	public UserController(UserService us, LibraryService ls) {
+	public UserController(UserService us, LibraryService ls, CartService cs) {
 		this.us = us;
 		this.ls = ls;
+		this.cs = cs;
 	}
 	
 	@GetMapping
@@ -139,6 +143,17 @@ public class UserController {
 		if (u != null) {
 			List<Libraries> l = ls.get(u.getId());
 			return new ResponseEntity<>(l, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(path="carts/{id}")
+	public ResponseEntity<List<Carts>> getCartsById(@PathVariable Integer id) {
+		Users u = us.getById(id);
+		if (u != null) {
+			List<Carts> c = cs.get(u.getId());
+			return new ResponseEntity<>(c, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
