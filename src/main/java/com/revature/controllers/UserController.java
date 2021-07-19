@@ -35,7 +35,7 @@ public class UserController {
 	
 	@GetMapping
 	public List<Users> getAllUsers(HttpServletRequest request) {
-		System.out.println(request.getSession().getId());
+		//System.out.println(request.getSession().getId());
 		return us.getAll();
 	}
 	
@@ -93,9 +93,9 @@ public class UserController {
 	public ResponseEntity<Users> getInfo(HttpServletRequest request) {
 		//System.out.println(request.getSession().getId());
 		Users user = (Users)request.getSession().getAttribute("user");
-		Integer id = (Integer)request.getSession().getAttribute("id");
-		System.out.println(user);
-		System.out.println(id);
+//		Integer id = (Integer)request.getSession().getAttribute("id");
+//		System.out.println(user);
+//		System.out.println(id);
 		if (user != null) {
 			return ResponseEntity.ok(user);
 		}
