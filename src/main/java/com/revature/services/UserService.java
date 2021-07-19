@@ -15,7 +15,7 @@ public interface UserService extends GenericService<Users> {
 
 	public boolean purchaseCart(Integer id);
 
-	public void deposit(Users u, Double amount);
+	public boolean deposit(Users u, Double amount);
 
 	public List<Purchases> getHistory(Integer id);
 

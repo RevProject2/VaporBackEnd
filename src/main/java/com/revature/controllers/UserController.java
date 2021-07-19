@@ -126,9 +126,14 @@ public class UserController {
 	}
 	
 	@PutMapping(path="/deposit")
-	public void deposit(@RequestBody Users u, HttpServletRequest request) {
+	public ResponseEntity<Users> deposit(@RequestBody Users u, HttpServletRequest request) {
 		Users user = (Users)request.getSession().getAttribute("user");
-		us.deposit(user, u.getBalance());
+		boolean check = us.deposit(user, u.getBalance());
+		if (check) {
+			request.getSession().setAttribute("user", user);
+			return new ResponseEntity<>(u, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(u, HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping(path="/history")
