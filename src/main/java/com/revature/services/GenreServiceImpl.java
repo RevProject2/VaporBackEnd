@@ -2,9 +2,21 @@ package com.revature.services;
 
 import java.util.List;
 
-import com.revature.beans.Genres;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.revature.beans.Genres;
+import com.revature.repos.GenreDAO;
+
+@Service
 public class GenreServiceImpl implements GenreService {
+	
+	private GenreDAO gdao;
+	
+	@Autowired
+	public GenreServiceImpl(GenreDAO gdao) {
+		this.gdao = gdao;
+	}
 
 	@Override
 	public Genres getById(int id) {
@@ -20,8 +32,7 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	public List<Genres> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Genres>) gdao.findAll();
 	}
 
 	@Override
