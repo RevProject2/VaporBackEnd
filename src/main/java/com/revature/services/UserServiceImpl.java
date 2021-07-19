@@ -90,11 +90,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deposit(Users u, Double amount) {
+	public boolean deposit(Users u, Double amount) {
 		if (amount != null && amount > 0) {
 			u.setBalance(u.getBalance() + amount);
 			udao.save(u);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
