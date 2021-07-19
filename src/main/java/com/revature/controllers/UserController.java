@@ -134,6 +134,7 @@ public class UserController {
 			return new ResponseEntity<>(u, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(u, HttpStatus.BAD_REQUEST);
+		
 	}
 	
 	@GetMapping(path="/history")
