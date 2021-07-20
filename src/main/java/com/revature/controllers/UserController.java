@@ -114,9 +114,9 @@ public class UserController {
 		return ResponseEntity.status(401).build();
 	}
 	
-	@PostMapping(path="/purchase")
-	public ResponseEntity<Integer> purchaseCart(HttpServletRequest request) {
-		Integer id = (Integer)request.getSession().getAttribute("id");
+	@PostMapping(path="/purchase/{id}")
+	public ResponseEntity<Integer> purchaseCart(@PathVariable Integer id, HttpServletRequest request) {
+		//Integer id = (Integer)request.getSession().getAttribute("id");
 		boolean b = us.purchaseCart(id);
 		if (b == true) {
 			return new ResponseEntity<>(id, HttpStatus.OK);
@@ -137,10 +137,14 @@ public class UserController {
 		
 	}
 	
-	@GetMapping(path="/history")
-	public List<Purchases> getHistory(HttpServletRequest request) {
-		Integer id = (Integer)request.getSession().getAttribute("id");
-		return us.getHistory(id);
+	@GetMapping(path="/history/{id}")
+	public ResponseEntity<List<Purchases>> getHistory(@PathVariable Integer id, HttpServletRequest request) {
+		//Integer id = (Integer)request.getSession().getAttribute("id");
+		List<Purchases> history = us.getHistory(id);
+		if (history != null) {
+			return new ResponseEntity<>(history, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(history, HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping(path="libraries/{id}")
