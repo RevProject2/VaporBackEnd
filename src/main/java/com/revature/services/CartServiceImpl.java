@@ -43,8 +43,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public void deleteById(int id) {
-		// TODO Auto-generated method stub
-
+		cdao.deleteById(id);
 	}
 	@Override
 	public void deleteCartItem(Carts c) {
