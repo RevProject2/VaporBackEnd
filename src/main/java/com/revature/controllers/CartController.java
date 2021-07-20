@@ -53,13 +53,13 @@ public class CartController {
 	}
 	
 	@PostMapping(path="/remove")
-	public void removeGame(@RequestBody Carts c, HttpServletRequest request) {
+	public ResponseEntity<Carts> removeGame(@RequestBody Carts c, HttpServletRequest request) {
 //		Users u = (Users)request.getSession().getAttribute("user");
 //		Carts c = new Carts();
 //		c.setUserId(u);
 //		c.setGameId(g);
 		cs.deleteCartItem(c);
-		//return ResponseEntity.ok(c);
+		return ResponseEntity.ok(c);
 	}
 	
 	@DeleteMapping(path="/remove/{id}")
