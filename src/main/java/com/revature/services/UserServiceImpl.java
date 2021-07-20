@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 			for(Carts c : cart) {
 				udao.addToLibrary(id, c.getGameId().getId());
 				Date d = new Date(System.currentTimeMillis());
-				udao.addToPurchaseHistory(id, c.getGameId().getId(), c.getGameId().getPrice(), d);
+				udao.addToPurchaseHistory(id, c.getGameId().getId(), d);
 				cdao.delete(c);
 			}
 			u.setBalance(u.getBalance() - cart_price);
