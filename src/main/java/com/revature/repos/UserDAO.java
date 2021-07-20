@@ -20,6 +20,6 @@ public interface UserDAO extends CrudRepository<Users, Integer>{
 	public void addToLibrary(int uid, int gid);
 	@Transactional
 	@Modifying
-	@Query(value="insert into project2.purchases values (default,?1,?2,?3,?4)",nativeQuery = true)
-	public void addToPurchaseHistory(int uid, int gid, double p, Date d);
+	@Query(value="insert into project2.purchases values (default,?1,?2,?3)",nativeQuery = true)
+	public void addToPurchaseHistory(int uid, int gid, Date d);
 }
