@@ -147,7 +147,7 @@ public class UserController {
 		return new ResponseEntity<>(history, HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping(path="libraries/{id}")
+	@GetMapping(path="/libraries/{id}")
 	public ResponseEntity<List<Libraries>> getLibraryById(@PathVariable Integer id, HttpServletRequest request) {
 		Users u = us.getById(id);
 		if (u != null) {
@@ -158,7 +158,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(path="carts/{id}")
+	@GetMapping(path="/carts/{id}")
 	public ResponseEntity<List<Carts>> getCartsById(@PathVariable Integer id) {
 		Users u = us.getById(id);
 		if (u != null) {
