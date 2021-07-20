@@ -42,21 +42,21 @@ public class CartController {
 	}
 	
 	@PostMapping(path="/add")
-	public ResponseEntity<Carts> addGame(@RequestBody Games g, HttpServletRequest request) {
-		Users u = (Users)request.getSession().getAttribute("user");
-		Carts c = new Carts();
-		c.setUserId(u);
-		c.setGameId(g);
+	public ResponseEntity<Carts> addGame(@RequestBody Carts c, HttpServletRequest request) {
+//		Users u = (Users)request.getSession().getAttribute("user");
+//		Carts c = new Carts();
+//		c.setUserId(u);
+//		c.setGameId(g);
 		Carts cart = cs.add(c);
 		return ResponseEntity.ok(cart);
 	}
 	
 	@PostMapping(path="/remove")
-	public void removeGame(@RequestBody Games g, HttpServletRequest request) {
-		Users u = (Users)request.getSession().getAttribute("user");
-		Carts c = new Carts();
-		c.setUserId(u);
-		c.setGameId(g);
+	public void removeGame(@RequestBody Carts c, HttpServletRequest request) {
+//		Users u = (Users)request.getSession().getAttribute("user");
+//		Carts c = new Carts();
+//		c.setUserId(u);
+//		c.setGameId(g);
 		cs.deleteCartItem(c);
 		//return ResponseEntity.ok(c);
 	}
