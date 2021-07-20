@@ -25,6 +25,16 @@ public class Purchases {
 	@ManyToOne(targetEntity = Games.class)
 	@JoinColumn(name="game_id", referencedColumnName = "id")
 	private Games gameId;
+	@Column(columnDefinition = "NUMERIC(12,2)")
+	private Double price;
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	private Date p_date;
 	
 	public Purchases() {
@@ -64,12 +74,19 @@ public class Purchases {
 	}
 
 	@Override
+	public String toString() {
+		return "Purchases [id=" + id + ", userId=" + userId + ", gameId=" + gameId + ", price=" + price + ", p_date="
+				+ p_date + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((gameId == null) ? 0 : gameId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((p_date == null) ? 0 : p_date.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
@@ -98,17 +115,17 @@ public class Purchases {
 				return false;
 		} else if (!p_date.equals(other.p_date))
 			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
 		if (userId == null) {
 			if (other.userId != null)
 				return false;
 		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Purchases [id=" + id + ", userId=" + userId + ", gameId=" + gameId + ", p_date=" + p_date + "]";
 	}
 	
 	
